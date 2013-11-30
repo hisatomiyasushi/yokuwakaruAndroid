@@ -7,6 +7,8 @@ import java.util.TimerTask;
 import android.app.Activity;
 import android.os.Bundle;
 
+// 修正のテスト
+
 /**
  * アプリケーションメインアクティビティ
  */
