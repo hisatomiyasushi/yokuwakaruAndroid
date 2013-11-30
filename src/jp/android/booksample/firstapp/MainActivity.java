@@ -6,15 +6,15 @@ import java.util.TimerTask;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 
-// 修正のテスト
-// またまた修正のテスト
 
 /**
  * アプリケーションメインアクティビティ
  */
 
-public class MainActivity extends Activity implements Runnable {
+public class MainActivity extends Activity implements Runnable, OnClickListener {
     
     /**
      * タイマーによりタイマースレッドで呼び出されるタイマー用のタスクです。
@@ -33,11 +33,18 @@ public class MainActivity extends Activity implements Runnable {
         }
 
     }
-
+    
+    /**
+     * アクティビティ生成時に呼び出されます。
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mMoving = true;
+        CircleView circleView1 = (CircleView) findViewById(R.id.circleView1);
+        // イベントハンドラの設定
+        circleView1.setOnClickListener(this);
     }
     
     
@@ -50,6 +57,11 @@ public class MainActivity extends Activity implements Runnable {
      * タイマーオブジェクトです。
      */
     private Timer mTimer;
+    
+    /**
+     * 円がアニメーションを行うかどうかを格納する変数です。
+     */
+    private boolean mMoving;
     
     /**
      * アクティビティーの操作が可能になったタイミングで呼び出されてます。
@@ -79,11 +91,30 @@ public class MainActivity extends Activity implements Runnable {
     public void run() {
         CircleView circleView1 = (CircleView) findViewById(R.id.circleView1);
         // 実際に円を移動させる
-        circleView1.setX(circleView1.getX() +1);
-        circleView1.setY(circleView1.getY() +1);
+        if (mMoving) {
+            circleView1.setX(circleView1.getX() +2);
+            circleView1.setY(circleView1.getY() +2);
+        }
     }
     
-    
+    /**
+     * ビューがクリック（タップ）されたときに呼び出されます
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.circleView1:
+                // 円がタップされたときの処理
+                // 円の動作を止める
+                mMoving = false;
+                // ダイアログの表示
+                TouchDialog dialog = new TouchDialog();
+                dialog.show(getFragmentManager(), "");
+                break;
+            default:
+                break;                
+        }
+    }
     
     
     
