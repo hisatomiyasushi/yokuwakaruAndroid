@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 // 修正のテスト
+// またまた修正のテスト
 
 /**
  * アプリケーションメインアクティビティ
